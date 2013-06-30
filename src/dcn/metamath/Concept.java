@@ -26,15 +26,15 @@ class Concept {
       ChildType type = typeIterator.next();
       Node child = childIterator.next();
       if (child == null) {
-        result.add(new TreeConsistencyError("Null link", node));
+        result.add(new TreeConsistencyError(TreeConsistencyError.ErrorType.NULL_LINK, node.getContainingNode()));
       } else if (child.isPhantom()) {
-        result.add(new TreeConsistencyError("phantom node", node));
+        result.add(new TreeConsistencyError(TreeConsistencyError.ErrorType.PHANTOM_NODE, child));
       } else if (!type.type.equals(child.getInstance().getMyConcept())) {
-        result.add(new TreeConsistencyError("Incorrect concept", node));
+        result.add(new TreeConsistencyError(TreeConsistencyError.ErrorType.INCOMPATIBLE_CONCEPT, node.getContainingNode()));
       }
     }
     if (typeIterator.hasNext() != childIterator.hasNext()) {
-      result.add(new TreeConsistencyError("Incorrect children amount", node));
+      result.add(new TreeConsistencyError(TreeConsistencyError.ErrorType.INCORRECT_CHILDREN_AMOUNT, node.getContainingNode()));
     }
     return new TreeConsistencyCheckResult(result);
   }

@@ -1,33 +1,33 @@
 package dcn.metamath;
 
-import java.util.ArrayList;
+public class Node {
 
-class Node {
+  //Nullable
+  private NodeInstance instance;
 
-  Node(Concept myConcept, ArrayList<Node> children) {
-    this.myConcept = myConcept;
-    this.children = children;
+  public Node(NodeInstance instance) {
+    this.instance = instance;
   }
 
-  private Concept myConcept;
+  public Node() {
 
-  private ArrayList<Node> children;
-
-
-  ArrayList<Node> getChildren() {
-    return children;
   }
 
-  Concept getMyConcept() {
-    return myConcept;
+  public NodeInstance getInstance() {
+    return instance;
   }
 
-  TreeConsistencyCheckResult checkConsistency() {
-    TreeConsistencyCheckResult result = this.getMyConcept().verifyNode(this);
-    for (Node child:children) {
-      result = TreeConsistencyCheckResult.plus(result, child.checkConsistency());
+  public boolean isPhantom() {
+    return instance==null;
+  }
+
+  public TreeConsistencyCheckResult checkConsistency() {
+    if (this.isPhantom()) {
+      //todo: should not pass null
+      return TreeConsistencyCheckResult.error(new TreeConsistencyError("phantom node", null));
+    } else {
+      return this.getInstance().checkConsistency();
     }
-    return result;
   }
 
 }

@@ -20,6 +20,12 @@ class TreeConsistencyCheckResult {
     return new TreeConsistencyCheckResult(null);
   }
 
+  static TreeConsistencyCheckResult error(TreeConsistencyError error) {
+    ArrayList<TreeConsistencyError> result = new ArrayList<TreeConsistencyError>();
+    result.add(error);
+    return new TreeConsistencyCheckResult(result);
+  }
+
   ArrayList<TreeConsistencyError> getErrors() {
     if (errors==null) {
       errors = new ArrayList<TreeConsistencyError>();

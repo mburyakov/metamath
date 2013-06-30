@@ -3,9 +3,13 @@ package dcn.metamath;
 class TreeConsistencyError {
 
   private String message;
-  private Node node;
 
-  public TreeConsistencyError(String message, Node node) {
+
+  //todo: different concept for every error type
+
+  private NodeInstance node;
+
+  public TreeConsistencyError(String message, NodeInstance node) {
     this.message = message;
     this.node = node;
   }
@@ -14,7 +18,7 @@ class TreeConsistencyError {
     return message;
   }
 
-  public Node getNode() {
+  public NodeInstance getNode() {
     return node;
   }
 }
